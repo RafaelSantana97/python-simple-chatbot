@@ -15,17 +15,19 @@ class CompatibilityChecker:
     return best_compatibility
 
 
-  def handle_question(self, question) -> frozenset:
-    question = question.replace('?', ' ? ').replace(',', ' , ').replace('.', ' . ')
-    return frozenset(question.split())
+  def handle_sentence(self, sentence) -> frozenset:
+    for word in Data().words_to_be_ignored:
+      sentence = sentence.replace(word, '')
+
+    return frozenset(sentence.split())
 
 
   def compatibility_calculator(self, raw_key, raw_question) -> float:
     question_words = self.key_words_identifier(raw_question.lower())
     key_words = self.key_words_identifier(raw_key.lower())
 
-    question_words = self.handle_question(question_words)
-    key_words = frozenset(key_words.split())
+    question_words = self.handle_sentence(question_words)
+    key_words = self.handle_sentence(key_words)
 
     compatible_words = len(key_words.intersection(question_words))
     all_words = len(key_words.union(question_words))

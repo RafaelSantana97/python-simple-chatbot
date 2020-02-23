@@ -12,7 +12,7 @@ class ChatBot:
     self.info()
 
     while True:
-      self.question = input('[Voce]: ').lower()
+      self.question = input('[Você]: ').lower()
       if self.exit_is_required(self.question):
         break
 
